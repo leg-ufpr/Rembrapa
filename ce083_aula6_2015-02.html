@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+<script src="libs/navigation-1.0/codefolding.js"></script>
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+
+
+<script>
+$(document).ready(function ()  {
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: "h1.title, .toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">LEG</a>
+      <!-- <a class="navbar-brand" href="#"> -->
+      <!--   <img alt="LEG" src="img/leg.png"> -->
+      <!-- </a> -->
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Início</a></li>
+        <li class="dropdown">
+          <a href="authoring" class="dropdown-toggle"
+          data-toggle="dropdown" role="button"
+          aria-expanded="false">Sumário <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+             <li class="dropdown-header">Introdução</li>
+            <li><a href="ce083_aula2_2015-02.html">Funções, objetos e
+            classes</a></li>
+            <li><a href="ce083_aula3_2015-02.html">Manipulação de
+            objetos</a></li>
+            <li><a href="ce083_aula4_2015-02.html">Entrada de
+            dados</a></li>
+            <li><a href="ce083_aula5_2015-02.html">Análise exploratória
+                de dados</a></li>
+             <li><a href="ce083_aula6_2015-02.html">Gráficos</a></li>
+             <li><a href="ce083_aula7_2015-02.html">Probabilidade</a></li>
+             <li class="divider"></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="navbar-collapse collapse navbar-right" >
+        <ul class="nav navbar-nav">
+          <li><a class="btn btn-link" href="https://github.com/leg-ufpr/leg-ufpr.github.io" role="button">
+              <i class="fa fa-github"></i> GitHub </a>
+          </li>
+        </ul>
+      </div><!--/.navbar-right -->
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted">Code</span> <span class="text-muted caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+</ul>
+</div>
+
+
+</div>
+
+
+<div id="graficos-no-r" class="section level1">
+<h1>Gráficos no R</h1>
+<p>O R possui um sistema básico de gráficos (<em>base graphics</em>), com diversas funções disponíveis através do pacote <strong>graphics</strong>, que já vem instalado e carregado por padrão em toda sessão do R.</p>
+<p>Para ver todas as opções dos gráficos <em>base</em> (padrão) do R, veja</p>
+<pre class="r"><code>library(help = graphics)</code></pre>
+<p>Além dos gráficos básicos, existem mais dois pacotes para gráficos no R, o <strong>lattice</strong> e o <strong>ggplot2</strong>. o pacote <strong>lattice</strong> é mais antigo, e também já está incluído na instalação básica do R, embora não esteja carregado por padrão. Para carregá-lo, basta usar <code>library(lattice)</code>. O <strong>lattice</strong> é muito útil para a visualização multivariada de dados, ou seja, quando temos muitas variáveis e queremos visualizar todas (ou algumas) conjuntamente. O pacote <strong>ggplot2</strong> é mais recente, e é uma implementação moderna dos conceitos expostos no livro <em>The Grammar of Graphics</em>. O <strong>ggplot2</strong> é um pacote que precisa ser instalado a parte no R.</p>
+<p>Os comandos para gráficos se dividem em três grupos:</p>
+<ul>
+<li><strong>Alto-nível</strong>: são as funções que criam novos gráficos, com eixos, títulos, etc. Exemplo: <code>plot()</code>, <code>hist()</code>, <code>barplot()</code></li>
+<li><strong>Baixo-nível</strong>: funções que adicionam mais informações (pontos, linhas, texto, etc.) a um gráfico já existente. Exemplo: <code>lines()</code>, <code>points()</code>, <code>legend()</code></li>
+<li><strong>Interativo</strong>: funções que permitem adicionar ou extrair informações a um gráfico já existente, de modo interativo. Exemplo: <code>locator()</code></li>
+</ul>
+<p>Ainda existem uma série de parâmetros gráficos que podem ser manipulados e customizados, a partir dos argumentos da função <code>par()</code>.</p>
+<div id="terminologia-dos-parametros-mais-comuns" class="section level2">
+<h2>Terminologia dos parâmetros mais comuns</h2>
+<div id="anotacoes" class="section level3">
+<h3>Anotações</h3>
+<p><img src="img/fig8m.png" width="800px" /></p>
+</div>
+<div id="regioes-do-grafico" class="section level3">
+<h3>Regiões do gráfico</h3>
+<p><img src="img/fig1m.png" width="800px" /></p>
+</div>
+<div id="regioes-de-multiplos-graficos" class="section level3">
+<h3>Regiões de múltiplos gráficos</h3>
+<p><img src="img/fig2m.png" width="800px" /></p>
+</div>
+<div id="sistema-de-coordenadas" class="section level3">
+<h3>Sistema de coordenadas</h3>
+<p><img src="img/fig3m.png" width="800px" /></p>
+</div>
+<div id="tipos-de-linhas-lty" class="section level3">
+<h3>Tipos de linhas (<code>lty</code>)</h3>
+<p><img src="img/fig4m.png" width="800px" /></p>
+</div>
+<div id="tipos-de-pontos-pch" class="section level3">
+<h3>Tipos de pontos (<code>pch</code>)</h3>
+<p><img src="img/fig5m.png" width="800px" /></p>
+</div>
+<div id="tipos-de-plot-type" class="section level3">
+<h3>Tipos de plot (<code>type</code>)</h3>
+<p><img src="img/fig6m.png" width="800px" /></p>
+</div>
+<div id="expressoes-matematicas-expression" class="section level3">
+<h3>Expressões matemáticas (<code>expression()</code>)</h3>
+<p><img src="img/fig7m.png" width="800px" /></p>
+</div>
+</div>
+<div id="exemplos-dos-recursos-graficos" class="section level2">
+<h2>Exemplos dos recursos gráficos</h2>
+<p>O R vem com algumas demonstrações (<em>demos</em>) de seus recursos “embutidas” no programa. Para listar as <em>demos</em> disponíveis digite na linha de comando:</p>
+<pre class="r"><code>demo()</code></pre>
+<p>Para rodar uma das demosntrações, basta colocar o nome entre os parênteses. As <em>demos</em> são úties para termos uma idéia dos recursos disponíveis no programa e para ver os comandos que devem ser utilizados.</p>
+<p>Por exemplo, vamos rodar a <em>demo</em> de recursos gráficos. Note que os comandos vão aparecer na janela de comandos e os gráficos serão automaticamente produzidos na janela gráfica. A cada passo voce vai ter que pressionar a tecla <kbd>Enter</kbd> para ver o próximo gráfico.</p>
+<ol style="list-style-type: decimal">
+<li>No terminal (<em>prompt</em>) do R, digite</li>
+</ol>
+<pre><code>&gt; demo(graphics)
+
+
+    demo(graphics)
+    ---- ~~~~~~~~
+
+Type  &lt;Return&gt;   to start : 
+</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Pressione a tecla <kbd>Enter</kbd></li>
+<li>A <em>demo</em> será iniciada e uma tela gráfica irá se abrir. Na tela de comandos serão mostrados comandos que serão utilizados para gerar um gráfico seguidos da mensagem:</li>
+</ol>
+<pre><code>Hit &lt;Return&gt; to see next plot: 
+</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Inspecione os novos comandos e depois pressione novamente a tecla <kbd>Enter</kbd>. Um novo gráfico surgirá ilustrando outros recursos do programa. Prossiga inspecionando os gráficos e comandos e pressionando <kbd>Enter</kbd> até terminar a <em>demo</em>. Experimente outras demos gráficas como <code>demo(persp)</code> e <code>demo(image)</code>, por exemplo.</li>
+<li>Para ver o código fonte (comandos) de uma <em>demo</em> você pode utilizar comandos como se seguem (e de forma análoga para outras <em>demos</em>):</li>
+</ol>
+<pre class="r"><code>file.show(system.file(&quot;demo/graphics.R&quot;, package = &quot;graphics&quot;))
+file.show(system.file(&quot;demo/image.R&quot;, package = &quot;graphics&quot;))
+file.show(system.file(&quot;demo/persp.R&quot;, package = &quot;graphics&quot;))</code></pre>
+</div>
+<div id="algumas-configuracoes-de-graficos-no-r" class="section level2">
+<h2>Algumas configurações de gráficos no R</h2>
+<div id="graficos-multiplos-na-janela-grafica" class="section level3">
+<h3>Gráficos múltiplos na janela gráfica</h3>
+<p>O principal recurso para controlar o aspecto de gráficos no R é dado pela função de configuração <code>par()</code>, que permite configurar formato, tamanho, subdivisões, margens, entre diversas outras opções.</p>
+<p>Por exemplo <code>par(mfrow = c(1, 2))</code> divide a janela gráfica em um <em>frame</em> que permite acomodar dois gráficos em uma linha e <code>par(mfrow = c(3, 4))</code> permite acomodar 12 gráficos em uma mesma janela arranjados em três linhas e quatro colunas. O comando <code>layout()</code> permite dividir a janela gráfica de forma ianda mais flexível.</p>
+</div>
+<div id="graficos-em-arquivos" class="section level3">
+<h3>Gráficos em arquivos</h3>
+<p>Por padrão, os gráficos gerados são mostrados em uma janela na tela do computador, ou seja, a tela é o dispositivo de saída (<em>output device</em>) padrão para gráficos. Para produzir gráficos em arquivos basta redirecionar o dispositivo de saída para o formato gráfico desejado. O código a seguir mostra como gerar um um histograma de 200 amostras de uma distribuição normal padrão em um arquivo chamado <code>figura1.pdf</code> em formato <code>pdf</code>.</p>
+<pre class="r"><code>pdf(&quot;figura1.pdf&quot;)
+hist(rnorm(200))
+dev.off()</code></pre>
+<p>No código acima, a função <code>pdf()</code> <strong>abre um novo dispositivo de saída</strong>, ou seja, qualquer gráfico que seja criado depois desse comando será direcionado para esse dispositivo, que no caso é o arquivo <code>.pdf</code>. <strong>Portanto o gráfico não será mostrado na tela!</strong> Para gerar a figura no arquivo de fato, é necessário então <strong>fechar</strong> o dispositivo de saída, usando a função <code>dev.off()</code>. Note que esta última função é <strong>obrigatória</strong> para gerar o gráfico no arquivo <code>figura1.pdf</code>. Após executar <code>dev.off()</code>, o dispositivo de saída volta automaticamente a ser a tela do computador.</p>
+<p>Caso deseje-se o arquivo em outro formato gráfico, a função adequada deve ser chamada. Por exemplo, <code>jpeg()</code> para formatos <code>.jpg</code> (ou <code>.jpeg</code>), <code>png()</code> para arquivos <code>.png</code>, que são muito usados em páginas web, <code>postscript()</code> para gráficos em formato <code>.ps</code> ou <code>.eps</code>, entre outros. Cada uma das funçõese possuem argumentos adicionais que permitem controlar tamanho, resolução, entre outros atributos do arquivo gráfico.</p>
+</div>
+<div id="modificando-graficos" class="section level3">
+<h3>Modificando gráficos</h3>
+<p>Gráficos no R são tipicamente construídos com opções padrão definidas pelo programa, mas podem ser modificados ou ter elementos adicionados conforme desejado pelo usuário.</p>
+<p>A melhor forma para entender como modificar gráficos é pensar que cada elemento pode ser controlado por uma função, e elementos são adicionados ao gráfico para cada chamada de função específica, de forma semelhante ao que se faria ao desenhar em um papel. Um exemplo típico é a adição de legenda a um gráfico já feito, o que pode ser feito por <code>legend()</code>.</p>
+<p>Muitos parâmetros de um gráfico podem ser alterados através dos argumentos da própria função que está sendo utilizada (funções de alto-nível). No entanto, mutas vezes são necessárias funções auxiliares, ou de baixo-nível, para adicionar “camadas” ao gráfico.</p>
+<blockquote>
+<p>NOTA: Se um gráfico já feito deve ser mudado, então é necessário repetir os comandos anteriores um a um até chegar no que se deseja modificar. Este comportamento difere de alguns outros programas que permitem modificar um gráfico já desenhado.</p>
+</blockquote>
+<p>Veja na figura abaixo um exemplo frequentemente solicitado por usuários. No gráfico da esquerda está o histograma dos dados de uma amostra de tamanho 200 produzido com opções padrão (<em>default</em>) da função <code>hist()</code>. No gráfico da direita nota-se que o título foi removido, o texto dos eixos foi modificado e a posição dos eixos foi alterada fazendo com que as barras do histograma sejam desenhadas junto aos eixos. Para isto, na chamada de <code>hist()</code> passamos um valor vazio para o argumento <code>main</code>, o que causa a remoção do título do gráfico. Os textos dos eixos são definidos por <code>xlab</code> e <code>ylab</code>. Finalmente, para modificar os eixos, iniciamos removendo os eixos do gráfico inicial com <code>axes = FALSE</code>, e depois os adicionamos com <code>axis()</code> na posição desejada, sendo que no primeiro argumento da função as opções 1 e 2 correspondem aos eixos das abcissas e ordenadas, respectivamente.</p>
+<pre class="r"><code>## &quot;Fixa&quot; a geração de números aleatórios
+set.seed(123)
+## 200 valores de uma N(0, 1)
+x &lt;- rnorm(200)
+## Divide a janela gráfica em 1 linha e 2 colunas
+par(mfrow = c(1, 2))
+## Histograma padrão
+hist(x)
+## Histograma modificado
+hist(x, main = &quot;&quot;, axes = FALSE,
+     xlab = &quot;Dados&quot;, ylab = &quot;Frequências absolutas&quot;)
+# Insere o eixo X (1)
+axis(1, at = seq(-2.5, 3.5, by = 0.5), pos = 0)
+# Insere o eixo Y (2)
+axis(2, at = seq(0, 50, by = 10), pos = -2.5)
+## Volta a janela gráfica para 1 linha e 1 coluna
+par(mfrow = c(1, 1))</code></pre>
+<p><img src="ce083_aula6_2015-02_files/figure-html/unnamed-chunk-5-1.png" title="" alt="" width="672" /></p>
+</div>
+</div>
+<div id="alguns-exemplos" class="section level2">
+<h2>Alguns exemplos</h2>
+<div id="grafico-com-dois-eixos-y-distintos" class="section level3">
+<h3>Gráfico com dois eixos Y distintos</h3>
+<p>Considere fazer um gráfico de duas variáveis de grandezas distintas, <span class="math inline">\(Y_1\)</span> e <span class="math inline">\(Y_2\)</span> contra uma mesma variável <span class="math inline">\(X\)</span>. Isto pode ser útil, por exemplo, para ver se as flutuações são comuns com a variação nos valores de <span class="math inline">\(X\)</span>. Com isso, podemos fazer um gráfico colocando eixos distintos para <span class="math inline">\(Y_1\)</span> e <span class="math inline">\(Y_2\)</span>, um à esquerda e outro a direita do gráfico.</p>
+<p>Vamos considerar o conjunto de dados <code>airquality</code> já disponível no R que possui as medidas de ozônio, radiação solar, velocidade do vento e temperatura em Nova York de Maio a Setembro de 1973.</p>
+<pre class="r"><code>data(airquality)
+str(airquality)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    153 obs. of  6 variables:
+##  $ Ozone  : int  41 36 12 18 NA 28 23 19 8 NA ...
+##  $ Solar.R: int  190 118 149 313 NA NA 299 99 19 194 ...
+##  $ Wind   : num  7.4 8 12.6 11.5 14.3 14.9 8.6 13.8 20.1 8.6 ...
+##  $ Temp   : int  67 72 74 62 56 66 65 59 61 69 ...
+##  $ Month  : int  5 5 5 5 5 5 5 5 5 5 ...
+##  $ Day    : int  1 2 3 4 5 6 7 8 9 10 ...</code></pre>
+<p>Nos comandos a seguir criamos o gráfico da figura abaixo com as evoluções das medidas de temperatura e níveis de ozônio no período, colocando a escala de cada uma delas em um dos eixos verticais.</p>
+<pre class="r"><code>## Altera o tamanho das margens do gráfico
+par(mar = c(4, 4, 4, 4))
+## Gráfico de temperatura
+plot(airquality$Temp, type = &quot;l&quot;, xlab = &quot;Tempo&quot;, ylab = &quot;Temperatura&quot;)
+## Permite que um novo gráfico seja adicionado em outro já existente
+par(new = TRUE)
+## Gráfico de ozônio
+plot(airquality$Ozone, type = &quot;l&quot;, axes = FALSE, frame = TRUE,
+     ann = FALSE, col = 2)
+# Adiciona o eixo à direita
+axis(4, col.axis = 2, col = 2)
+# Adiciona o título do eixo à direita
+mtext(&quot;Ozônio&quot;, side = 4, line = 3, col = 2)</code></pre>
+<p><img src="ce083_aula6_2015-02_files/figure-html/unnamed-chunk-7-1.png" title="" alt="" width="672" /></p>
+</div>
+</div>
+<div id="graficos-exploratorios" class="section level2">
+<h2>Gráficos exploratórios</h2>
+<p>Considere que você tem observações de uma variável quantitativa <span class="math inline">\(Y\)</span>, possivelmente com a presença de mais uma ou duas (ou mais) variáveis categóricas, <span class="math inline">\(X\)</span>, <span class="math inline">\(Z\)</span>, etc., que geralmente possuem alguns valores distintos, os níveis.</p>
+<p>No exemplo abaixo, a variável <span class="math inline">\(Y\)</span> pode ser a expectativa de vida ou o PIB per capita, as variáveis <span class="math inline">\(X\)</span>, <span class="math inline">\(Z\)</span>, etc. podem ser o país, o continente, ou o ano.</p>
+<p>O que você gostaria de saber sobre <span class="math inline">\(Y\)</span> (ignorando as outras variáveis)? Agora pense nas possíveis relações entre <span class="math inline">\(Y\)</span> com <span class="math inline">\(X\)</span>, <span class="math inline">\(Z\)</span>, …, o que você gostaria de saber?</p>
+<ul>
+<li>Média, mediana, moda?</li>
+<li>Variância, amplitude, coeficiente de variação?</li>
+</ul>
+<p>Resumos:</p>
+<ul>
+<li>Resumo dos cinco números</li>
+<li>Boxplots</li>
+<li>Gráficos de barras</li>
+<li>Histogramas</li>
+</ul>
+</div>
+<div id="graficos-para-uma-unica-variavel" class="section level2">
+<h2>Gráficos para uma única variável</h2>
+</div>
+<div id="graficos-para-duas-variaveis" class="section level2">
+<h2>Gráficos para duas variáveis</h2>
+<!-- Referencias -->
+</div>
+</div>
+
+<center>
+  <hr width="100%" size="3px">
+  <p> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+      <img src="img/CC_by-nc-sa_80x15.png" alt="Licença Creative Commons 4.0"> </a>
+  </p>
+  <p> <font size="2"> Este conteúdo
+      está disponível por meio da Licença Creative Commons 4.0 </font>
+  </p>
+</center>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

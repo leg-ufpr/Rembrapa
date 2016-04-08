@@ -1,0 +1,398 @@
+
+# Gráficos no R
+
+O R possui um sistema básico de gráficos (*base graphics*), com diversas
+funções disponíveis através do pacote **graphics**, que já vem instalado
+e carregado por padrão em toda sessão do R.
+
+Para ver todas as opções dos gráficos *base* (padrão) do R, veja
+
+```{r, eval=FALSE}
+library(help = graphics)
+```
+
+Além dos gráficos básicos, existem mais dois pacotes para gráficos no R,
+o **lattice** e o **ggplot2**. o pacote **lattice** é mais antigo, e
+também já está incluído na instalação básica do R, embora não esteja
+carregado por padrão. Para carregá-lo, basta usar `library(lattice)`. O
+**lattice** é muito útil para a visualização multivariada de dados, ou
+seja, quando temos muitas variáveis e queremos visualizar todas (ou
+algumas) conjuntamente. O pacote **ggplot2** é mais recente, e é uma
+implementação moderna dos conceitos expostos no livro *The Grammar of
+Graphics*. O **ggplot2** é um pacote que precisa ser instalado a parte
+no R.
+
+Os comandos para gráficos se dividem em três grupos:
+
+- **Alto-nível**: são as funções que criam novos gráficos, com  eixos,
+  títulos, etc. Exemplo: `plot()`, `hist()`, `barplot()`
+- **Baixo-nível**: funções que adicionam mais informações (pontos,
+  linhas, texto, etc.) a um gráfico já existente. Exemplo: `lines()`,
+  `points()`, `legend()`
+- **Interativo**: funções que permitem adicionar ou extrair informações
+  a um gráfico já existente, de modo interativo. Exemplo: `locator()`
+
+Ainda existem uma série de parâmetros gráficos que podem ser manipulados
+e customizados, a partir dos argumentos da função `par()`.
+
+## Terminologia dos parâmetros mais comuns
+
+### Anotações
+<img src="img/fig8m.png" width="800px" />
+
+### Regiões do gráfico
+<img src="img/fig1m.png" width="800px" />
+
+### Regiões de múltiplos gráficos
+<img src="img/fig2m.png" width="800px" />
+
+### Sistema de coordenadas
+<img src="img/fig3m.png" width="800px" />
+
+### Tipos de linhas (`lty`)
+<img src="img/fig4m.png" width="800px" />
+
+### Tipos de pontos (`pch`)
+<img src="img/fig5m.png" width="800px" />
+
+### Tipos de plot (`type`)
+<img src="img/fig6m.png" width="800px" />
+
+### Expressões matemáticas (`expression()`)
+<img src="img/fig7m.png" width="800px" />
+
+## Exemplos dos recursos gráficos
+
+O R vem com algumas demonstrações (*demos*) de seus recursos "embutidas"
+no programa. Para listar as *demos* disponíveis digite na linha de
+comando:
+
+```{r, eval=FALSE}
+demo()
+```
+
+Para rodar uma das demosntrações, basta colocar o nome entre os
+parênteses. As *demos* são úties para termos uma idéia dos recursos
+disponíveis no programa e para ver os comandos que devem ser utilizados.
+
+Por exemplo, vamos rodar a *demo* de recursos gráficos. Note que os
+comandos vão aparecer na janela de comandos e os gráficos serão
+automaticamente produzidos na janela gráfica. A cada passo voce vai ter
+que pressionar a tecla <kbd>Enter</kbd> para ver o próximo gráfico. 
+
+1. No terminal (*prompt*) do R, digite
+
+```
+> demo(graphics)
+
+
+	demo(graphics)
+	---- ~~~~~~~~
+
+Type  <Return>	 to start : 
+
+```
+
+2. Pressione a tecla <kbd>Enter</kbd>
+3. A *demo* será iniciada e uma tela gráfica irá se abrir. Na tela de
+comandos serão mostrados comandos que serão utilizados para gerar um
+gráfico seguidos da mensagem:
+
+```
+Hit <Return> to see next plot: 
+
+```
+
+4. Inspecione os novos comandos e depois pressione novamente a tecla
+<kbd>Enter</kbd>. Um novo gráfico surgirá ilustrando outros recursos do
+programa. Prossiga inspecionando os gráficos e comandos e pressionando
+<kbd>Enter</kbd> até terminar a *demo*. Experimente outras demos
+gráficas como `demo(persp)` e `demo(image)`, por exemplo.
+5. Para ver o código fonte (comandos) de uma *demo* você pode utilizar
+comandos como se seguem (e de forma análoga para outras *demos*):
+  
+```{r, eval=FALSE}
+file.show(system.file("demo/graphics.R", package = "graphics"))
+file.show(system.file("demo/image.R", package = "graphics"))
+file.show(system.file("demo/persp.R", package = "graphics"))
+```
+
+## Algumas configurações de gráficos no R
+
+### Gráficos múltiplos na janela gráfica
+
+O principal recurso para controlar o aspecto de gráficos no R
+é dado pela função de configuração `par()`, que permite configurar formato, tamanho,
+subdivisões, margens, entre diversas outras opções.
+
+Por exemplo `par(mfrow = c(1, 2))` divide a janela gráfica em um *frame*
+que permite acomodar dois gráficos em uma linha e `par(mfrow = c(3, 4))`
+permite acomodar 12 gráficos em uma mesma janela arranjados em três
+linhas e quatro colunas.  O comando `layout()` permite dividir a janela
+gráfica de forma ianda mais flexível.
+
+### Gráficos em arquivos
+
+Por padrão, os gráficos gerados são mostrados em uma janela na tela do
+computador, ou seja, a tela é o dispositivo de saída (*output device*)
+padrão para gráficos.  Para produzir gráficos em arquivos basta
+redirecionar o dispositivo de saída para o formato gráfico desejado. O
+código a seguir mostra como gerar um um histograma de 200 amostras de
+uma distribuição normal padrão em um arquivo chamado `figura1.pdf` em
+formato `pdf`.
+
+```{r, eval=FALSE}
+pdf("figura1.pdf")
+hist(rnorm(200))
+dev.off()
+```
+
+No código acima, a função `pdf()` **abre um novo dispositivo de saída**,
+ou seja, qualquer gráfico que seja criado depois desse comando será
+direcionado para esse dispositivo, que no caso é o arquivo
+`.pdf`. **Portanto o gráfico não será mostrado na tela!** Para gerar a
+figura no arquivo de fato, é necessário então **fechar** o dispositivo
+de saída, usando a função `dev.off()`. Note que esta última função é
+**obrigatória** para gerar o gráfico no arquivo `figura1.pdf`. Após
+executar `dev.off()`, o dispositivo de saída volta automaticamente a ser
+a tela do computador.
+
+Caso deseje-se o arquivo em outro formato gráfico, a função adequada deve ser chamada.
+Por exemplo, `jpeg()` para formatos `.jpg` (ou `.jpeg`), `png()` para
+arquivos `.png`, que são muito usados em páginas web, `postscript()`
+para gráficos em formato `.ps` ou `.eps`, entre outros. Cada uma das
+funçõese possuem argumentos adicionais que permitem controlar tamanho, 
+resolução, entre outros atributos do arquivo gráfico.
+
+### Modificando gráficos
+
+Gráficos no R são tipicamente construídos com opções padrão
+definidas pelo programa, mas podem ser modificados 
+ou ter elementos adicionados conforme desejado pelo usuário.
+
+A melhor forma para entender como modificar gráficos é pensar que cada 
+elemento pode ser controlado por uma função, e elementos são adicionados
+ao gráfico para cada chamada de função específica, de forma semelhante
+ao que se faria ao desenhar em um papel. Um exemplo típico é a adição de legenda
+a um gráfico já feito, o que pode ser feito por `legend()`.
+
+Muitos parâmetros de um gráfico podem ser alterados através dos
+argumentos da própria função que está sendo utilizada (funções de
+alto-nível). No entanto, mutas vezes são necessárias funções auxiliares,
+ou de baixo-nível, para adicionar "camadas" ao gráfico.
+
+> NOTA: Se um gráfico já feito deve ser mudado, então é necessário
+> repetir os comandos anteriores um a um até chegar no que se deseja
+> modificar. Este comportamento difere de alguns outros programas que
+> permitem modificar um gráfico já desenhado.
+
+Veja na figura abaixo um exemplo frequentemente solicitado por
+usuários. No gráfico da esquerda está o histograma dos dados de uma
+amostra de tamanho 200 produzido com opções padrão (*default*) da função
+`hist()`. No gráfico da direita nota-se que o título foi removido, o
+texto dos eixos foi modificado e a posição dos eixos foi alterada
+fazendo com que as barras do histograma sejam desenhadas junto aos
+eixos.  Para isto, na chamada de `hist()` passamos um valor vazio para o
+argumento `main`, o que causa a remoção do título do gráfico.  Os textos
+dos eixos são definidos por `xlab` e `ylab`. Finalmente, para modificar
+os eixos, iniciamos removendo os eixos do gráfico inicial com `axes =
+FALSE`, e depois os adicionamos com `axis()` na posição desejada, sendo
+que no primeiro argumento da função as opções 1 e 2 correspondem aos
+eixos das abcissas e ordenadas, respectivamente.
+
+```{r, fig.show='hold'}
+## "Fixa" a geração de números aleatórios
+set.seed(123)
+## 200 valores de uma N(0, 1)
+x <- rnorm(200)
+## Divide a janela gráfica em 1 linha e 2 colunas
+par(mfrow = c(1, 2))
+## Histograma padrão
+hist(x)
+## Histograma modificado
+hist(x, main = "", axes = FALSE,
+     xlab = "Dados", ylab = "Frequências absolutas")
+# Insere o eixo X (1)
+axis(1, at = seq(-2.5, 3.5, by = 0.5), pos = 0)
+# Insere o eixo Y (2)
+axis(2, at = seq(0, 50, by = 10), pos = -2.5)
+## Volta a janela gráfica para 1 linha e 1 coluna
+par(mfrow = c(1, 1))
+```
+
+## Alguns exemplos
+
+### Gráfico com dois eixos Y distintos
+
+Considere fazer um gráfico de duas variáveis de grandezas distintas,
+$Y_1$ e $Y_2$ contra uma mesma variável $X$. Isto pode ser útil, por
+exemplo, para ver se as flutuações são comuns com a variação nos valores
+de $X$. Com isso, podemos fazer um gráfico colocando eixos distintos
+para $Y_1$ e $Y_2$, um à esquerda e outro a direita do gráfico.
+
+Vamos considerar o conjunto de dados `airquality` já disponível no R que
+possui as medidas de ozônio, radiação solar, velocidade do vento e
+temperatura em Nova York de Maio a Setembro de 1973.
+
+```{r}
+data(airquality)
+str(airquality)
+```
+
+Nos comandos a seguir criamos o gráfico da figura abaixo com 
+as evoluções das medidas de temperatura e níveis de ozônio no período,
+colocando a escala de cada uma delas em um dos eixos verticais.
+
+```{r}
+## Altera o tamanho das margens do gráfico
+par(mar = c(4, 4, 4, 4))
+## Gráfico de temperatura
+plot(airquality$Temp, type = "l", xlab = "Tempo", ylab = "Temperatura")
+## Permite que um novo gráfico seja adicionado em outro já existente
+par(new = TRUE)
+## Gráfico de ozônio
+plot(airquality$Ozone, type = "l", axes = FALSE, frame = TRUE,
+     ann = FALSE, col = 2)
+# Adiciona o eixo à direita
+axis(4, col.axis = 2, col = 2)
+# Adiciona o título do eixo à direita
+mtext("Ozônio", side = 4, line = 3, col = 2)
+```
+
+## Gráficos exploratórios
+
+Considere que você tem observações de uma variável quantitativa $Y$,
+possivelmente com a presença de mais uma ou duas (ou mais) variáveis
+categóricas, $X$, $Z$, etc., que geralmente possuem alguns valores
+distintos, os níveis.
+
+No exemplo abaixo, a variável $Y$ pode ser a expectativa de vida ou o
+PIB per capita, as variáveis $X$, $Z$, etc. podem ser o país, o
+continente, ou o ano.
+
+O que você gostaria de saber sobre $Y$ (ignorando as outras variáveis)?
+Agora pense nas possíveis relações entre $Y$ com $X$, $Z$, ..., o que
+você gostaria de saber?
+
+- Média, mediana, moda?
+- Variância, amplitude, coeficiente de variação?
+
+Resumos:
+
+- Resumo dos cinco números
+- Boxplots
+- Gráficos de barras
+- Histogramas
+
+## Gráficos para uma única variável
+
+```{r, include=FALSE}
+## ------------------------------------------------------------------------
+## Base de dados do PIB do gapminder (www.gapminder.org)
+# browseURL("www.gapminder.org")
+url <- "http://www.leg.ufpr.br/~fernandomayer/dados/pib_gapminder.txt"
+dados <- read.table(url, header = TRUE, sep = "\t")
+
+## ------------------------------------------------------------------------
+## Confira a estrutura e classifique as variáveis (escreva aqui como
+## comentário)
+str(dados)
+
+## Gráfico de faixa
+stripchart(dados$expVida)
+stripchart(dados$expVida, method = "jitter")
+stripchart(dados$expVida, method = "jitter", pch = 20,
+           xlab = "Expectativa de vida")
+
+## Qual país possui a menor expectativa de vida?
+dados$pais[which.min(dados$expVida)]
+## E a maior?
+dados$pais[which.max(dados$expVida)]
+
+## Alterando alguns argumentos
+par(bty = "n")
+stripchart(dados$expVida, method = "jitter", pch = 20,
+           xlab = "Expectativa de vida")
+stripchart(dados$expVida,
+           method = "jitter", # para "misturar" os dados
+           pch = 20, # tipo de ponto
+           xlab = "Expectativa de vida", # titulo do eixo X
+           col = "darkblue", # cor do ponto
+           xlim = c(0, 100) # limites do eixo X (min, max)
+           )
+
+stripchart(dados$expVida,
+           method = "jitter",
+           pch = 20,
+           xlab = "Expectativa de vida",
+           col = "darkblue",
+           xlim = c(0, 100),
+           axes = FALSE)
+axis(1, at = seq(0, 100, 10))
+mtext("Fonte: www.gapminder.org", side = 1, cex = 0.8, col = 2,
+      adj = 1, line = 4)
+
+## Boxplot
+par(bty = "o")
+boxplot(dados$expVida)
+boxplot(dados$expVida, horizontal = TRUE,
+        xlab = "Expectativa de vida")
+boxplot(dados$expVida, horizontal = TRUE,
+        xlab = "Expectativa de vida",
+        ylim = c(0, 100), axes = FALSE)
+axis(1, at = seq(0, 100, 10))
+box()
+
+## Histograma
+hist(dados$expVida)
+hist(dados$expVida, main = "", xlab = "Expectativa de vida",
+     ylab = "Frequência", axes = FALSE, xlim = c(0, 100))
+axis(1, at = seq(0, 100, 10))
+axis(2)
+box()
+
+## Barplot com continente
+cont.tab <- table(dados$continente)
+barplot(cont.tab)
+```
+
+## Gráficos para duas variáveis
+
+```{r, include=FALSE}
+## Boxplot de expectativa de vida por continente
+boxplot(expVida ~ continente, data = dados)
+boxplot(expVida ~ continente, data = dados, varwidth = TRUE)
+
+## Histograma de expectativa de vida para os continentes Africa e
+## Americas
+par(mfrow = c(2, 1))
+hist(dados$expVida[dados$continente == "Africa"], main = "Africa")
+hist(dados$expVida[dados$continente == "Americas"], main = "Americas")
+par(mfrow = c(1, 1))
+## O que deve ser feito para podermos comparar melhor?
+par(mfrow = c(2, 1))
+hist(dados$expVida[dados$continente == "Africa"], main = "Africa",
+     xlim = c(10, 100))
+hist(dados$expVida[dados$continente == "Americas"], main = "Americas",
+     xlim = c(0, 100))
+par(mfrow = c(1, 1))
+
+## Expectativa de vida x PIB
+plot(expVida ~ pibPercap, data = dados)
+plot(log(expVida) ~ log(pibPercap), data = dados)
+
+## E se você quisesse visualizar essa relação para cada continente, por
+## exemplo?
+library(lattice)
+xyplot(expVida ~ pibPercap, data = dados)
+xyplot(log(expVida) ~ log(pibPercap) | continente, data = dados)
+xyplot(log(expVida) ~ log(pibPercap), data = dados,
+       group = continente, auto.key = TRUE)
+
+```
+
+
+
+<!-- Referencias -->
+
+

@@ -1,0 +1,66 @@
+---
+title: "Rembrapa"
+output:
+  html_document:
+    toc: false
+---
+
+[![Build Status](https://travis-ci.org/leg-ufpr/Rembrapa.svg)](https://travis-ci.org/leg-ufpr/Rembrapa)
+
+<!-- <div class="alert alert-danger" role="alert"> **ATENÇÃO!** As aulas serão no -->
+<!-- **Anfieatro 14** do Setor de Ciências Biológicas </div> -->
+
+# Introdução ao ambiente estatístico R
+
+Estas notas1 foram inicialmente escritas para um curso de introdução ao
+sistema estatístico R ministrado para profissionais da EMBRAPA em
+Brasília, 30/05 a 03/06 de 2005. Desde sua versão inicial o material tem
+sido constantemente modificado com a expansão, correção e inclusão de
+tópicos.
+
+O objetivo é ilustrar aspectos básicos do sistema com ênfase na
+compreensão de aspectos básicos da linguagem, a estrutura e a forma de
+operar o programa. Nenhum método e/ou modelo estatístico em particular é
+discutido em detalhes seja em seus fundamentos ou alternativas para
+análises. Os métodos estatísticos são usados ao longo do texto
+simplesmente para ilustrar aspectos do uso da linguagem.
+
+Na maior parte do texto assume-se apenas familiaridade com conceitos e
+métodos básicos de estatística. Alguns tópicos especializados são usados
+em algumas Sessões e, não sendo de interesse de leitor, podem ser
+deixados de lado sem prejuízo ao acompanhamento das demais partes do
+texto. Não será assumido nenhum conhecimento prévio do R. O curso foi
+preparado e ministrado em ambiente LINUX porém não faz uso de nenhum
+recurso específico deste sistema operacional. O material pode ser
+acompanhado utilizando o R instalado em outros sistemas operacionais,
+tal como Windows; ou Macintosh.
+
+O texto começa com uma Seção que tem como objetivo "experimentar o R", o
+que permite ter uma idéia de seus recursos e a forma de trabalhar com
+este programa. Sugere-se reproduzir e estudar os comandos indicados bem
+como inspecionar e interpretar os resultados produzidos por tais
+comandos, o que vai permitir uma familiaridade com aspectos básicos do
+uso do programa. Espera-se que ao final desta Seção o leitor se sinta a
+vontade para iniciar o programa e experimentar o seu uso em outros
+contextos de análises. Ao longo do material mais detalhes o uso do
+programa R serão apresentados, na maior parte das vezes motivados por
+exemplos de análise de dados. Para utilizar o R siga os seguintes
+passos:
+
+1. inicie o R em seu computador;
+2. voce verá uma janela de comandos com o símbolo >; que é chamado de
+   prompt do R, indicando que o programa está pronto para receber
+   comandos;
+3. a seguir digite (ou "recorte e cole") os comandos mostrados ao longo
+   deste material ou seus próprios comandos.
+
+No restante deste texto vamos seguir as seguintes convenções.
+
+- comandos do R são mostrados em fontes do tipo slanted verbatim como
+esta, e precedidas pelo símbolo `>`
+- saídas do R são sempre exibidas em fontes do tipo verbatim `como esta`
+- linhas iniciadas pelo símbolo `#` são comentários e são ignoradas pelo
+  R.
+
+
+[LEG]: http://www.leg.ufpr.br
