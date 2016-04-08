@@ -1,13 +1,10 @@
-# leg-ufpr.github.io
+# Rembrapa
 
-[![Build Status](https://travis-ci.org/leg-ufpr/leg-ufpr.github.io.svg)](https://travis-ci.org/leg-ufpr/leg-ufpr.github.io)
+[![Build Status](https://travis-ci.org/leg-ufpr/Rembrapa.svg)](https://travis-ci.org/leg-ufpr/Rembrapa)
 
-## Repositório de aulas do LEG
+## Introdução ao ambiente estatístico R
 
-Repositório criado para armazenar as páginas de aulas dos professores do
-LEG.
-
-Veja a página com as disciplinas disponíveis em http://aulas.leg.ufpr.br.
+Repositório inicial.
 
 O site é todo construído usando apenas o [R Markdown][], por isso, o
 código fonte está nos arquivos `Rmd`. Para gerar o site você precisará
